@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Screen Sharer Picker</title>
+</head>
+<body>
+  <h1>Random Screen Sharer Picker</h1>
+  <textarea id="names" rows="10" cols="30" placeholder="Enter one name per line"></textarea><br><br>
+  <button onclick="pickName()">Pick a Sharer</button>
+  <h2 id="result"></h2>
+
+  <script>
+    function pickName() {
+      const names = document.getElementById('names').value.trim().split('\n').filter(Boolean);
+      if (names.length === 0) {
+        document.getElementById('result').innerText = "Please enter some names!";
+        return;
+      }
+      const randomName = names[Math.floor(Math.random() * names.length)];
+      document.getElementById('result').innerText = "Selected to Share Screen: " + randomName;
+    }
+  </script>
+</body>
+</html>
