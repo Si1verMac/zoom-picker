@@ -73,16 +73,22 @@
   <button onclick="pickName()">Pick a Sharer</button>
   <h2 id="result"></h2>
 
-  <script>
-    function pickName() {
-      const names = document.getElementById('names').value.trim().split('\n').filter(Boolean);
-      if (names.length === 0) {
-        document.getElementById('result').innerText = "Please enter some names!";
-        return;
-      }
-      const randomName = names[Math.floor(Math.random() * names.length)];
-      document.getElementById('result').innerText = "Selected to Share Screen: " + randomName;
+<script>
+  let pickCount = 0; // Counter for number of picks
+
+  function pickName() {
+    const names = document.getElementById('names').value.trim().split('\n').filter(Boolean);
+    if (names.length === 0) {
+      document.getElementById('result').innerText = "Please enter some names!";
+      return;
     }
-  </script>
+
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    pickCount++; // Increment counter on every button click
+
+    document.getElementById('result').innerText = 
+      `Selected to Share Screen: ${randomName}\n\n(Picker has been run ${pickCount} time${pickCount > 1 ? 's' : ''})`;
+  }
+</script>
 </body>
 </html>
