@@ -50,6 +50,7 @@
       background-color: #4CAF50;
       color: white;
       cursor: pointer;
+      margin: 5px;
     }
 
     button:hover {
@@ -62,6 +63,7 @@
       font-weight: bold;
       color: #333;
       text-align: center;
+      white-space: pre-line; /* preserve line breaks */
     }
   </style>
 </head>
@@ -71,6 +73,7 @@
   <h3>(Enter one name per line.)</h3>
   <textarea id="names" placeholder="Enter one name per line"></textarea><br>
   <button onclick="pickName()">Pick a Sharer</button>
+  <button onclick="copyResult()">Copy Result</button>
   <h2 id="result"></h2>
 
 <script>
@@ -86,8 +89,26 @@
     const randomName = names[Math.floor(Math.random() * names.length)];
     pickCount++; // Increment counter on every button click
 
+    const now = new Date();
+    const timestamp = now.toLocaleString();
+
     document.getElementById('result').innerText = 
-      `Selected to Share Screen: ${randomName}\n\n(Picker has been run ${pickCount} time${pickCount > 1 ? 's' : ''})`;
+      `Selected to Share Screen: ${randomName}\n(Picker has been run ${pickCount} time${pickCount > 1 ? 's' : ''})\nPicked at: ${timestamp}`;
+  }
+
+  function copyResult() {
+    const resultText = document.getElementById('result').innerText;
+    if (resultText.trim() === "") {
+      alert("No result to copy yet. Please pick a sharer first!");
+      return;
+    }
+    navigator.clipboard.writeText(resultText)
+      .then(() => {
+        alert('Result copied to clipboard! You can paste it into Zoom chat.');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
   }
 </script>
 </body>
