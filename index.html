@@ -29,10 +29,6 @@
       text-align: center;
     }
     
-<div style="margin-bottom: 20px;">
-  <input id="sessionName" type="text" placeholder="Enter session name" style="width: 300px; font-size: 1.2em; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: 'Hermetico-Regular', Arial, sans-serif;">
-</div>
-    
     textarea {
       width: 300px;
       height: 200px;
@@ -75,6 +71,9 @@
 <body>
   <h1>Pick Random Participant to Share Screen</h1>
   <h3>(Enter one name per line.)</h3>
+  <div style="margin-bottom: 20px;">
+  <input id="sessionName" type="text" placeholder="Enter session name" style="width: 300px; font-size: 1.2em; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: 'Hermetico-Regular', Arial, sans-serif;">
+</div>
   <textarea id="names" placeholder="Enter one name per line"></textarea><br>
   <button onclick="pickName()">Pick a Sharer</button>
   <button onclick="copyResult()">Copy Result</button>
