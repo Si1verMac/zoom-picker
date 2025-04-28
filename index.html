@@ -28,7 +28,9 @@
       margin-bottom: 20px;
       text-align: center;
     }
-
+    
+<input id="sessionName" type="text" placeholder="Enter session name"><br><br>
+    
     textarea {
       width: 300px;
       height: 200px;
@@ -78,8 +80,24 @@
 
 <script>
   let pickCount = 0; // Counter for number of picks
+  const LOCKOUT_TIME = 10 * 60 * 1000; // 10 minutes in milliseconds
 
   function pickName() {
+    const session = document.getElementById('sessionName').value.trim();
+    if (session === "") {
+      alert("Please enter a session name before picking!");
+      return;
+    }
+
+    const lastPick = localStorage.getItem(session);
+    const now = Date.now();
+
+    if (lastPick && (now - lastPick) < LOCKOUT_TIME) {
+      const minutesLeft = Math.ceil((LOCKOUT_TIME - (now - lastPick)) / 60000);
+      alert(`This session was already picked recently.\nPlease wait ${minutesLeft} more minute${minutesLeft > 1 ? 's' : ''} before picking again.`);
+      return;
+    }
+
     const names = document.getElementById('names').value.trim().split('\n').filter(Boolean);
     if (names.length === 0) {
       document.getElementById('result').innerText = "Please enter some names!";
@@ -89,11 +107,13 @@
     const randomName = names[Math.floor(Math.random() * names.length)];
     pickCount++; // Increment counter on every button click
 
-    const now = new Date();
-    const timestamp = now.toLocaleString();
+    const timestamp = new Date().toLocaleString();
 
     document.getElementById('result').innerText = 
-      `Selected to Share Screen: ${randomName}\n(Picker has been run ${pickCount} time${pickCount > 1 ? 's' : ''})\nPicked at: ${timestamp}`;
+      `Session: ${session}\nSelected to Share Screen: ${randomName}\n(Picker has been run ${pickCount} time${pickCount > 1 ? 's' : ''})\nPicked at: ${timestamp}`;
+
+    // ✅ Store session name with current timestamp
+    localStorage.setItem(session, now);
   }
 
   function copyResult() {
