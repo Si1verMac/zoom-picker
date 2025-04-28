@@ -1,2 +1,2 @@
 # zoom-picker
-Pick random name for zoom participant to share screen.
+Pick a random name for a zoom participant to share screen.
